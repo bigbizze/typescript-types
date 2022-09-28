@@ -26,20 +26,21 @@ CREATE TABLE IF NOT EXISTS ${TableName} (
     ${ForeignKeys<NumForeignKeys>}` : ""}
 );`;
 
-/** ############################# EXAMPLE USAGE ############################# */
-const postForeignKeys: ForeignKeys<2> = `
+if (require.main === module) {
+    /** ############################# EXAMPLE USAGE ############################# */
+    const postForeignKeys: ForeignKeys<2> = `
 FOREIGN KEY(originalPostId) REFERENCES Post(id)
 FOREIGN KEY(userId) REFERENCES user(id)
 `;
 
-const postTableCols = `
+    const postTableCols = `
   originalPostId INTEGER DEFAULT NULL,
   userId INTEGER NOT NULL
 `;
 
-export type PostTableQuery = CreateMySQLTable<"Post", typeof postTableCols, 2>;
+    type PostTableQuery = CreateMySQLTable<"Post", typeof postTableCols, 2>;
 
-const postTableQuery: PostTableQuery = `
+    const postTableQuery: PostTableQuery = `
 CREATE TABLE IF NOT EXISTS Post (
     id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
     ${postTableCols},
@@ -49,12 +50,10 @@ CREATE TABLE IF NOT EXISTS Post (
     ${postForeignKeys}
 );`
 
-const userTableCols = `
+    const userTableCols = ``;
 
-`;
-
-export type UserCreateTable = CreateMySQLTable<"User", typeof userTableCols>
-const userCreateTableQuery: UserCreateTable = `
+    type UserCreateTable = CreateMySQLTable<"User", typeof userTableCols>
+    const userCreateTableQuery: UserCreateTable = `
 CREATE TABLE IF NOT EXISTS User (
     id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
     ${userTableCols},
@@ -62,3 +61,4 @@ CREATE TABLE IF NOT EXISTS User (
     updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id)
 );`
+}
