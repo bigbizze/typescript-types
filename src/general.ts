@@ -13,7 +13,8 @@ type GetArrayNumsOffset<D extends number> =
       ? [PrevIdxOffset[D]]
       : [PrevIdxOffset[D], ...GetArrayNumsOffset<PrevIdx[D]>];
 
-export type NextNum<D extends number = 3> = [ ...ReverseArray<GetArrayNumsOffset<D>>, never ][D];
+export type NextNumOld<D extends number = 3> = [ ...ReverseArray<GetArrayNumsOffset<D>>, never ][D];
+export type NextNum<D extends number = 3> = GetArrayNumsOffset<D>[0];
 
 export type PrevNum<D extends number> = PrevIdx[D];
 
